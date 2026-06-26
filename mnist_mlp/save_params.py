@@ -60,11 +60,11 @@ def write_c_array(name, array, f):
         raise ValueError(f"Unsupported tensor shape for {name}: {array.shape}")
 
 
-def export_c(model, filename="model_weights.c"):
+def export_c(model, filename="mlp_weights.c"):
     model.eval()
 
     with open(filename, "w") as f:
-        f.write("#include <stdint.h>\n\n")
+        f.write('#include "mlp_weights.h"\n\n')
 
         for name, tensor in model.state_dict().items():
             array = (

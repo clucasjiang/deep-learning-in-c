@@ -1,5 +1,5 @@
-#ifndef MODEL_WEIGHTS_H
-#define MODEL_WEIGHTS_H
+#ifndef MLP_WEIGHTS_H
+#define MLP_WEIGHTS_H
 
 extern const float linear_relu_stack_0_weight[512][784];
 extern const float linear_relu_stack_0_bias[512];

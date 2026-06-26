@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "neural_net.h"
+#include "mlp.h"
 #include "read_data.h"
 
 int main(int argc, char *argv[]) {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     float input[784]; float output[10];
     read_image(input, img_index);
-    run_model(784, 10, input, output);
+    run_model(input, output);
     float max_prob = 0;
     int max_index = 0;
     for (int i=0; i<10; i++) {

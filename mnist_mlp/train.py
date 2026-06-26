@@ -3,14 +3,17 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import v2
+from pathlib import Path
 from model import NeuralNetwork
 from save_params import export_c
 
 batch_size = 64
 epochs = 20
+script_dir = Path(__file__).resolve().parent
+data_root = script_dir.parent / "mnist_dataset"
 
 training_data = datasets.MNIST(
-    root="data",
+    root=data_root,
     train=True,
     download=True,
     transform=v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
@@ -43,7 +46,11 @@ for epoch in range(epochs):
     print(f"Epoch: {epoch + 1}")
     train(training_dataloader, model, loss_fn, optimizer)
     
-export_c(model, "model_weights.c")
+torch.save(
+    {name: tensor.detach().cpu() for name, tensor in model.state_dict().items()},
+    script_dir / "mnist_model.pth",
+)
+export_c(model, script_dir / "mlp_weights.c")
 
 # Epoch = 5 Acc = 72.31%
 # Epoch = 6 Acc = 77.20%

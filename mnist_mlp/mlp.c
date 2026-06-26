@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <math.h>
-#include "model_weights.h"
+#include "mlp_weights.h"
 #include "read_data.h"
 
 void linear_layer(
@@ -31,16 +31,24 @@ void relu(int in_features, float input[in_features]) {
 }
 
 void softmax(int out_features, float output[out_features]) {
+    float max_logit = output[0];
+    for (int i=1; i<out_features; i++) {
+        if (output[i] > max_logit) {
+            max_logit = output[i];
+        }
+    }
+
     float sum = 0;
     for (int i=0; i<out_features; i++) {
-        sum += exp(output[i]);
+        output[i] = expf(output[i] - max_logit);
+        sum += output[i];
     }
     for (int i=0; i<out_features; i++) {
-        output[i] = exp(output[i]) / sum;
+        output[i] = output[i] / sum;
     }
 }
 
-void run_model(int in_features, int out_features, float input[in_features], float output[out_features]) {
+void run_model(float input[], float output[]) {
     float hidden_1[512];
     float hidden_2[512];
     
