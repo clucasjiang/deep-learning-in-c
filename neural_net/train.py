@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import v2
 from model import NeuralNetwork
+from save_params import export_c
 
 batch_size = 64
 epochs = 20
@@ -32,6 +33,7 @@ def train(dataloader, model, loss_fn, optimizer):
         if batch_number % 100 == 0:
             loss, current = loss.item(), (batch_number + 1) * len(x)
             print(f"loss: {loss:>7f}. [{current:>5d}/{size:>5d}]")
+        
             
 model = NeuralNetwork().to(device)
 loss_fn = nn.CrossEntropyLoss()
@@ -41,8 +43,7 @@ for epoch in range(epochs):
     print(f"Epoch: {epoch + 1}")
     train(training_dataloader, model, loss_fn, optimizer)
     
-torch.save(model.state_dict(), "mnist_model.pth")
-print("Saved model parameters to mnist_model.pth")
+export_c(model, "model_weights.c")
 
 # Epoch = 5 Acc = 72.31%
 # Epoch = 6 Acc = 77.20%

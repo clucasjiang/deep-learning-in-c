@@ -1,4 +1,4 @@
-This is implementing a simple neural network using C, evaluating the MNIST handwritten digits dataset.
+This is implementing a simple neural network (MLP) using C, evaluating the MNIST handwritten digits dataset.
 
 PyTorch trains the model and provides the parameters. The C code only runs the forward pass.
 
