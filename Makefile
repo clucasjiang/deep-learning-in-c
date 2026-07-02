@@ -4,6 +4,7 @@ LDLIBS ?= -lm
 
 MODEL ?= mnist_mlp
 INDEX ?= 0
+TRAIN_ARG ?= train
 
 # Add future model directories here, then define <model>_SRCS below.
 # Example:
@@ -16,7 +17,7 @@ mnist_mlp_SRCS := \
 	mnist_mlp/read_data.c \
 	mnist_mlp/mlp_weights.c
 
-.PHONY: all help models run clean $(MODELS) $(addprefix run-,$(MODELS)) $(addprefix clean-,$(MODELS))
+.PHONY: all help models run train clean $(MODELS) $(addprefix run-,$(MODELS)) $(addprefix train-,$(MODELS)) $(addprefix clean-,$(MODELS))
 
 all: $(MODELS)
 
@@ -27,6 +28,8 @@ help:
 	@printf "  make <model>          Build one model, e.g. make mnist_mlp\n"
 	@printf "  make run              Run MODEL=%s with INDEX=%s\n" "$(MODEL)" "$(INDEX)"
 	@printf "  make run-<model>      Run one model directly, e.g. make run-mnist_mlp INDEX=100\n"
+	@printf "  make train            Train MODEL=%s\n" "$(MODEL)"
+	@printf "  make train-<model>    Train one model directly, e.g. make train-mnist_mlp\n"
 	@printf "  make clean            Remove built binaries\n"
 
 models:
@@ -34,6 +37,8 @@ models:
 	@printf "  %s\n" $(MODELS)
 
 run: run-$(MODEL)
+
+train: train-$(MODEL)
 
 clean: $(addprefix clean-,$(MODELS))
 	@rmdir bin 2>/dev/null || true
@@ -46,6 +51,9 @@ bin/$(1): $$($(1)_SRCS) | bin
 
 run-$(1): bin/$(1)
 	./bin/$(1) $$(INDEX)
+
+train-$(1): bin/$(1)
+	./bin/$(1) $$(TRAIN_ARG)
 
 clean-$(1):
 	rm -f bin/$(1)

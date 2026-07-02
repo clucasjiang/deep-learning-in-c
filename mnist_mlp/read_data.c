@@ -5,6 +5,8 @@
 
 #define TEST_IMAGES_FILE "t10k-images-idx3-ubyte"
 #define TEST_LABELS_FILE "t10k-labels-idx1-ubyte"
+#define TRAIN_IMAGES_FILE "train-images-idx3-ubyte"
+#define TRAIN_LABELS_FILE "train-labels-idx1-ubyte"
 
 static FILE *open_mnist_file(const char *filename) {
     const char *roots[] = {
@@ -30,23 +32,42 @@ static FILE *open_mnist_file(const char *filename) {
 //     return lsb_int;
 // }
 
-void read_image(float img[784], int img_index) { // img is the array this function will write to, index is the index of the image in the test dataset
-    FILE *test_imgs_ptr = open_mnist_file(TEST_IMAGES_FILE);
+// train=0 -> read from testing dataset (10000 images)
+// train=1 -> read from training dataset (60000 images)
+// img is the array this function will write to, index is the index of the image in the test dataset
+void read_image(float img[784], int train, int img_index) { 
+    FILE *img_ptr;
+    if (train == 0) {
+        img_ptr = open_mnist_file(TEST_IMAGES_FILE);
+    } else if (train == 1) {
+        img_ptr = open_mnist_file(TRAIN_IMAGES_FILE);
+    } else {
+        fprintf(stderr, "train parameter must be 1 or 0");
+        exit(1);
+    }
     uint8_t img_byte[784];
-    fseek(test_imgs_ptr, 16 + (img_index * 784), SEEK_SET);
-    fread(img_byte, 1, 784, test_imgs_ptr);
+    fseek(img_ptr, 16 + (img_index * 784), SEEK_SET);
+    fread(img_byte, 1, 784, img_ptr);
     for (int i=0; i<784; i++) {
         img[i] = img_byte[i] / 255.0f;
     }
-    fclose(test_imgs_ptr);
+    fclose(img_ptr);
 }
 
-int read_label(int img_index) {
-    FILE *test_labels_ptr = open_mnist_file(TEST_LABELS_FILE);
-    fseek(test_labels_ptr, 8+img_index, SEEK_SET);
+int read_label(int train, int img_index) {
+    FILE *img_ptr;
+    if (train == 0) {
+        img_ptr = open_mnist_file(TEST_LABELS_FILE);
+    } else if (train == 1) {
+        img_ptr = open_mnist_file(TRAIN_LABELS_FILE);
+    } else {
+        fprintf(stderr, "train parameter must be 1 or 0");
+        exit(1);
+    }
+    fseek(img_ptr, 8+img_index, SEEK_SET);
     uint8_t label;
-    fread(&label, 1, 1, test_labels_ptr);
-    fclose(test_labels_ptr);
+    fread(&label, 1, 1, img_ptr);
+    fclose(img_ptr);
     return label;
 }
 
