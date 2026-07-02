@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "read_data.h"
+#include "read_image.h"
 
 #define TEST_IMAGES_FILE "t10k-images-idx3-ubyte"
 #define TEST_LABELS_FILE "t10k-labels-idx1-ubyte"

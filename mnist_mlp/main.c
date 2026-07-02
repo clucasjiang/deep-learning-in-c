@@ -4,7 +4,7 @@
 
 #include "mlp.h"
 #include "mlp_weights.h"
-#include "read_data.h"
+#include "read_image.h"
 
 void run_model(int img_index) {
     if (img_index >= 10000 || img_index < 0) {

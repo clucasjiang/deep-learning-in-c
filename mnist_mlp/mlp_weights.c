@@ -5,7 +5,7 @@
 #include "mlp.h"
 #include "stored_weights.h"
 
-#define STORED_WEIGHTS_SOURCE_PATH "mnist_mlp/stored_weights.c"
+#define STORED_WEIGHTS_SOURCE_PATH "mnist_mlp/stored_weights.c" // change to stored_weights_pytorch for params trained by pytorch
 #define STORED_WEIGHTS_HEADER_PATH "mnist_mlp/stored_weights.h"
 
 float linear_relu_stack_0_weight[HIDDEN_SIZE][784];

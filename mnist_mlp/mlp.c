@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <math.h>
 #include "mlp_weights.h"
-#include "read_data.h"
+#include "read_image.h"
 #include "mlp.h"
 
 void linear_layer(

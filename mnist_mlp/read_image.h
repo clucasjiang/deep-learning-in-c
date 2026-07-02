@@ -1,5 +1,5 @@
-#ifndef READ_DATA_H
-#define READ_DATA_H
+#ifndef READ_IMAGE_H
+#define READ_IMAGE_H
 
 void read_image(float img[784], int train, int img_index);
 int read_label(int train, int img_index);

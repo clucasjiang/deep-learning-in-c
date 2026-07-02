@@ -14,7 +14,7 @@ MODELS := mnist_mlp
 mnist_mlp_SRCS := \
 	mnist_mlp/main.c \
 	mnist_mlp/mlp.c \
-	mnist_mlp/read_data.c \
+	mnist_mlp/read_image.c \
 	mnist_mlp/mlp_weights.c \
 	mnist_mlp/stored_weights.c
 
