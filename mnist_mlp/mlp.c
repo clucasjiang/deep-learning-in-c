@@ -60,21 +60,27 @@ void forward(float input[], ForwardCache *cache) {
     softmax(cache->logits, cache->probs);
 }
 
-float find_mse_cost(float output[10], int label) {
-    float cost = 0;
+
+float find_cross_entropy_cost(float probs[10], int label) {
+    return -logf(probs[label] + 1e-7f);
+}
+
+void backward(float input[784], int label, ForwardCache *cache, Gradients *grads) {
+    float dlogits[10];
     for (int i=0; i<10; i++) {
-        if (i != label) {
-            cost += output[i] * output[i];
-        } else {
-            cost += (output[i] - 1.0f) * (output[i] - 1.0f);
-        }
+        dlogits[i] = cache->probs[i] - (i==label ? 1 : 0);
     }
-    return cost / 10.0f;
+    for (int i=0; i<10; i++) {
+        for (int j=0; j<HIDDEN_SIZE; j++) {
+            grads->w4[i][j] += dlogits[i] * cache->a2[j];  
+        }
+        grads->b4[i] += dlogits[i];
+    }
 }
 
 void train_model(void) {
     init_mlp_weights(1234);
+    Gradients grad = {0};
 
-    
     save_trained_weights();
 }
