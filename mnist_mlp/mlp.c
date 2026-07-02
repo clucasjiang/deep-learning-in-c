@@ -52,7 +52,6 @@ void softmax(float logits[10], float probs[10]) {
 }
 
 void forward(float input[], ForwardCache *cache) {
-    
     linear_layer(784, HIDDEN_SIZE, linear_relu_stack_0_weight, linear_relu_stack_0_bias, input, cache->z1);
     relu(HIDDEN_SIZE, cache->z1, cache->a1);
     linear_layer(HIDDEN_SIZE, HIDDEN_SIZE, linear_relu_stack_2_weight, linear_relu_stack_2_bias, cache->a1, cache->z2);
@@ -73,10 +72,9 @@ float find_mse_cost(float output[10], int label) {
     return cost / 10.0f;
 }
 
-float find_cross_entropy_cost(float output[10], int label) {
-
-}
-
 void train_model(void) {
     init_mlp_weights(1234);
+
+    
+    save_trained_weights();
 }

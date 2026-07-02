@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "mlp.h"
+#include "mlp_weights.h"
 #include "read_data.h"
 
 void run_model(int img_index) {
@@ -12,6 +13,7 @@ void run_model(int img_index) {
     }
     float input[784]; 
     ForwardCache cache = {0};
+    load_stored_weights();
     read_image(input, 0, img_index);
     forward(input, &cache);
     float max_prob = 0;

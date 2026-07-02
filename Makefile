@@ -15,7 +15,8 @@ mnist_mlp_SRCS := \
 	mnist_mlp/main.c \
 	mnist_mlp/mlp.c \
 	mnist_mlp/read_data.c \
-	mnist_mlp/mlp_weights.c
+	mnist_mlp/mlp_weights.c \
+	mnist_mlp/stored_weights.c
 
 .PHONY: all help models run train clean $(MODELS) $(addprefix run-,$(MODELS)) $(addprefix train-,$(MODELS)) $(addprefix clean-,$(MODELS))
 

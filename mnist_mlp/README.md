@@ -1,6 +1,5 @@
-This implements a simple MNIST multilayer perceptron (MLP) inference model in C.
+This implements a MNIST multilayer perceptron (MLP) model in C.
 
-PyTorch trains the model and provides the parameters. The C code only runs the forward pass.
 
 Model architecture (from the pytorch quickstart tutorial):
 input layer: 784
