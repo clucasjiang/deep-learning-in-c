@@ -48,7 +48,7 @@ void load_stored_weights(void) {
 }
 
 static void write_float(FILE *file, float value) {
-    fprintf(file, "%.9gf", value);
+    fprintf(file, "%.9ef", value);
 }
 
 static void write_vector(FILE *file, const char *name, int length, const float *values) {

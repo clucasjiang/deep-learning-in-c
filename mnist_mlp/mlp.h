@@ -24,7 +24,10 @@ typedef struct {
 } Gradients;
 
 void forward(float input[], ForwardCache *cache);
-void train_model(void);
+float find_cross_entropy_cost(float probs[10], int label);
+void backward(float input[784], int label, ForwardCache *cache, Gradients *grads);
+void update_weights(Gradients *grads, float learning_rate, int batch_count);
+int train_model(void);
 void softmax(float logits[10], float probs[10]);
 
 #endif
